@@ -16,4 +16,9 @@ class Project extends Model
         'image',
         'project_url'
     ];
+
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class, 'project_has_skill', 'project_id', 'skill_id');
+    }
 }

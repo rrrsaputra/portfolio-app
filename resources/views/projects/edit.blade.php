@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Add New Projects') }}
+            {{ __('Edit Projects') }}
         </h2>
     </x-slot>
 
@@ -9,7 +9,6 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-
                     <div class="flex justify-end m-2 p-2">
                         <a href="{{ route('projects.index') }}"
                             class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 text-white rounded-md shadow-md">
@@ -17,31 +16,36 @@
                         </a>
                     </div>
 
-                    <form method="POST" action="{{ route('projects.store') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('projects.update', $project->id) }}"
+                        enctype="multipart/form-data">
                         @csrf
-                        <div class="my-4">
-                            <label for="skill_id" class="block text-sm font-medium text-gray-700">Skill:</label>
-                            <select id="skill_id" name="skill_id"
-                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                @foreach ($skills as $skill)
-                                    <option value="{{ $skill->id }}">{{ $skill->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        @method('PUT')
                         <div class="my-4">
                             <label for="name" class="block text-sm font-medium text-gray-700">Name:</label>
                             <input type="text" id="name" name="name"
-                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                placeholder="Enter Skill Name" value="{{ $project->name }}" required />
                         </div>
                         <div class="my-4">
                             <label for="description" class="block text-sm font-medium text-gray-700">Description:</label>
                             <textarea id="description" name="description" rows="3"
-                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
+                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                placeholder="Enter Description" required>{{ $project->description }}</textarea>
                         </div>
+                        {{-- <div class="my-4">
+                            <label for="skill" class="block text-sm font-medium text-gray-700">List of Skill:</label>
+                            <select id="skill" name="skill" multiple
+                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                @foreach($skills as $skill)
+                                <option value="{{ $skill->id }}">{{ $skill->name }}</option>
+                                @endforeach
+                            </select>
+                        </div> --}}
                         <div class="my-4">
                             <label for="project_url" class="block text-sm font-medium text-gray-700">Project URL:</label>
                             <input type="text" id="project_url" name="project_url"
-                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                placeholder="Enter Project URL" value="{{ $project->project_url }}" required />
                         </div>
                         <div class="my-4">
                             <label for="image" class="block text-sm font-medium text-gray-700">Image:</label>

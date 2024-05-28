@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Skill;
+use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class ProjectController extends Controller
 {
@@ -11,7 +14,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return view('projects.index');
+        $projects = Project::all();
+
+        return view('projects.index', compact('projects'));
     }
 
     /**
@@ -19,7 +24,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        $skills = Skill::all();
+
+        return view('projects.create', compact('skills'));
     }
 
     /**
@@ -27,7 +34,27 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'skill_id' => ['required'],
+            'name' => ['required', 'min:3'],
+            'description' => ['required'],
+            'project_url' => ['required'],
+            'image' => ['required', 'image'],
+        ]);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image')->store('projects');
+            Project::create([
+                'skill_id' => $request->skill_id,
+                'name' => $request->name,
+                'image' => $image,
+                'description' => $request->description,
+                'project_url' => $request->project_url,
+            ]);
+
+            return Redirect::route('projects.index');
+        }
+        return Redirect::back();
     }
 
     /**
@@ -43,7 +70,9 @@ class ProjectController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $project = Project::find($id);
+
+        return view('projects.edit', compact('project'));
     }
 
     /**
@@ -51,7 +80,14 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $project = Project::find($id);
+        $project->name = $request->name;
+        if ($request->hasFile('image')) {
+            $file = $request->file('image')->store('projects');
+            $project->image = $file;
+        }
+        $project->save();
+        return redirect(route('projects.index'));
     }
 
     /**
@@ -59,6 +95,9 @@ class ProjectController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $project = Project::find($id);
+        $project->delete();
+
+        return redirect(route('projects.index'));
     }
 }
