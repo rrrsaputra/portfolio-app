@@ -5,9 +5,9 @@ use App\Http\Controllers\SkillController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 
-Route::get('/', function () {
+Route::get('/home', function () {
     return view('home');
-});
+})->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
