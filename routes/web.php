@@ -5,9 +5,21 @@ use App\Http\Controllers\SkillController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
+Route::get('/', function () {
+    return view('home', ['title' => 'Home Page']);
+});
+
+Route::get('/about', function () {
+    return view('about', ['title' => 'About']);
+});
+
+Route::get('/portfolio', function () {
+    return view('portfolio', ['title' => 'Portfolio']);
+});
+
+Route::get('/contact', function () {
+    return view('contact', ['title' => 'Contact']);
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
