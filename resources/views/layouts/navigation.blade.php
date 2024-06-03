@@ -15,11 +15,20 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('experiences.index')" :active="request()->routeIs('experiences.index')">
+                        {{ __('Experiences') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('educations.index')" :active="request()->routeIs('educations.index')">
+                        {{ __('Education') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('skills.index')" :active="request()->routeIs('skills.index')">
                         {{ __('Skills') }}
                     </x-nav-link>
                     <x-nav-link :href="route('projects.index')" :active="request()->routeIs('projects.index')">
                         {{ __('Projects') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('abouts.index')" :active="request()->routeIs('abouts.index')">
+                        {{ __('Profile') }}
                     </x-nav-link>
                 </div>
             </div>
